@@ -6,34 +6,114 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    {% block css %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.6.5/dist/css/uikit.min.css">
-    <link rel="stylesheet" href="">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2&family=Corben&family=Delius&family=Faustina&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% endblock %}
+
+    {% block js %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.5/dist/js/uikit.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.5/dist/js/uikit-icons.min.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    
+    {% endblock %}
+
     <title>Pursuit of Hoppiness</title>
 </head>
 
 <body>
-    <header id="navsection">
+    <header>
+        <div class="uk-grid-small uk-child-width-expand@s uk-text-center " uk-grid>
+
+            <div>
+                <a href="{% url 'home' %}" class="nav-link home-button">
+                    <h1 class="uk-text-center poh-title"><span>Pursuit of Hoppiness</span></h1>
+                </a>
+            </div>
+
+            <div>
+                <form class="uk-search uk-search-default search-bar" method="GET" action="{% url 'products' %}">
+                    <button class="uk-search-icon-flip" type="submit" uk-search-icon></button>
+                    <input class="uk-search-input" type="search" placeholder="Search">            
+                </form>
+            </div>
+
+            <div>
+                <div class="uk-column-1-2">
+                    <div class ="my-account-button">
+                        <a href="#" id="user-options" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <div class="text-center">
+                                <div><i class="fas fa-user fa-lg account-btn"></i></div>
+                                <p class="account-text">My Account</p>
+                            </div>
+                        </a>
+                        <div uk-dropdown aria-labelledby="user-options">
+                            <ul class="uk-nav uk-dropdown-nav">
+                            {% if request.user.is_authenticated %}
+                            {% if request.user.is_superuser %}
+                            <li><a href="" class="dropdown-link">Product Management</a></li>
+                            {% endif %}
+                            <li><a href="" class="dropdown-link">My Profile</a>
+                            <li><a href="{% url 'account_logout' %}" class="dropdown-link">Logout</a></li>
+                            {% else %}
+                            <li><a href="{% url 'account_signup' %}" class="dropdown-link">Register</a></li>
+                            <li><a href="{% url 'account_login' %}" class="dropdown-link">Login</a></li>
+                            {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="view-bag-button">
+                        <a href="{% url 'view_bag' %}">
+                            <div class="text-center">
+                                <div><i class="fas fa-shopping-bag fa-lg bag-btn"></i></div>
+                                <p class="bag-text">
+                                    {% if grand_total %}
+                                    £{{ grand_total|floatformat:2 }}
+                                    {% else %}
+                                    £0.00
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div>
+            {% include 'includes/mobile-top-header.html' %}
+            {% include 'includes/main-nav.html' %}
+        </div>
+        <div>
+            <h4 class="offer-banner">Sign up now for 10% off the store!</h4>                  
+        </div>
+        </div>
     </header>
-   
+
+
+    {% if messages %}
+    <div class="message-container"></div>
+    {% endif %}
+
+    {% block page_header %}
+    {% endblock %}
+
     {% block content %}
     {% endblock %}
 
-    <footer id="footer">
-        
-    </footer>
-    
-   
+    {% block postloadjs %}
+    {% endblock %}
+
+
 </body>
 
 </html>

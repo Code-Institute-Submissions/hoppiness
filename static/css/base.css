@@ -1,0 +1,53 @@
+header {
+    margin-top: 1em;
+}
+
+.poh-title {
+    font-family: 'Corben', cursive;
+    margin-top: -0.25em;
+}
+
+a:hover {
+    text-decoration: none;
+    color: black;
+  }
+
+.search-bar {
+    width: 100%;
+}
+
+.my-account-button {
+    margin-left: 70%;
+}
+.view-bag-button {
+    margin-right: 70%;
+}
+
+.bag-btn, .bag-text, .account-btn, .account-text {
+    color: black;
+}
+
+.bag-text, .account-text {
+    margin-top: 0em;
+} 
+
+.offer-banner {
+    background-color: black;
+    text-align: center;
+    color: white;
+}
+
+.nav-section {
+    justify-content: center;
+    background: transparent !important;
+    
+}
+
+.uk-navbar-nav>li>a {
+    font-family: 'Delius', serif !important;
+    font-weight: bold;
+}
+
+.nav-text {
+    font-family: 'Delius', serif !important;
+}
